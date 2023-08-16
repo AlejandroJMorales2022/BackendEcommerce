@@ -1,0 +1,23 @@
+{
+  "name": "paroductmanager",
+  "version": "1.0.0",
+  "description": "Product Manager con Express",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/server.js",
+    "seed:products": "node ./scripts/seed.products.js"
+  },
+  "author": "Alejandro Javier Morales",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "mongoose": "^7.4.1",
+    "mongoose-paginate-v2": "^1.7.31",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^2.0.22",
+    "socket.io": "^4.7.1",
+    "sweetalert2": "^11.7.18"
+  }
+}

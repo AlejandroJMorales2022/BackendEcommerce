@@ -1,0 +1,81 @@
+[
+  {
+    "title": "Cuaderno Espiral",
+    "description": "Cuaderno Espiral de 84 Hojas Cuadriculado",
+    "code": "CE84HC",
+    "price": 1200,
+    "status": true,
+    "stock": 35,
+    "category": "cuadernos",
+    "thumbnails": [
+      "/public/uploads/cuadernos_espiral_cuadriculados.jpg",
+      "/public/uploads/pencil_blue.jpg"
+    ],
+    "id": 1
+  },
+  {
+    "title": "Cuaderno Espiral",
+    "description": "Cuaderno Espiral de 84 Hojas Rayado",
+    "code": "CE84HR",
+    "price": 1100,
+    "status": true,
+    "stock": 50,
+    "category": "cuadernos",
+    "thumbnails": [
+      "/public/uploads/cuadernos_espiral_rayados.jpg"
+    ],
+    "id": 2
+  },
+  {
+    "title": "Lapiz Color Rojo",
+    "description": "Lapiz color Rojo largo Faber Castell x1",
+    "code": "LCRLFC",
+    "price": 600,
+    "status": true,
+    "stock": 200,
+    "category": "lapices color",
+    "thumbnails": [
+      "/public/uploads/pencil_red.jpg"
+    ],
+    "id": 3
+  },
+  {
+    "title": "Lapiz Color Morado",
+    "description": "Lapiz color Verde largo Faber Castell x1",
+    "code": "66556",
+    "price": 777,
+    "status": true,
+    "stock": 250,
+    "category": "yuyuiiy",
+    "thumbnails": [
+      "/public/uploads/pencil_green.jpg"
+    ],
+    "id": 4
+  },
+  {
+    "title": "Lapiz Color Azul",
+    "description": "Lapiz color Azul largo Faber Castell x1",
+    "code": "LCALFC",
+    "price": 600,
+    "status": true,
+    "stock": 200,
+    "category": "lapices color",
+    "thumbnails": [
+      "/public/uploads/pencil_blue.jpg"
+    ],
+    "id": 5
+  },
+  {
+    "title": "Lapiz Color Marron",
+    "description": "Lapiz color Verde largo Faber Castell x1",
+    "code": "LCVLFC",
+    "price": 700,
+    "status": true,
+    "stock": 250,
+    "category": "lapices color",
+    "thumbnails": [
+      "/public/uploads/pencil_red.jpg"
+    ],
+    "id": 6
+  }
+]

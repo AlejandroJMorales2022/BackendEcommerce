@@ -1,0 +1,54 @@
+.gral{
+    color: tomato;
+}
+.img_prod{
+    height: 130px;
+    width: 220;
+}
+.img_prod_cart{
+    height: 110px;
+}
+.title_field_product{
+    font-size: 0.8rem;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 600;
+}
+.form_products div{
+    display: block;
+    padding: 10px;
+}
+.title_container{
+    display: flex;
+    justify-content: center;
+}
+.mensaje{
+    background-color: black;
+    color: azure;
+    font-size: 0.8rem;
+}
+.navbar-nav:hover .nav-item:hover .nav-link:hover {
+    color: tomato;
+}
+.joined{
+    background-color: forestgreen;
+}
+.notJoined{
+    background-color: tomato;
+}
+#messages{
+    max-height: 50vh;
+    overflow-y: auto;
+}
+.productQty{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+}
+.card{
+    min-height: 306px;
+}
+.cardProd{
+    min-height: 425px;
+}
