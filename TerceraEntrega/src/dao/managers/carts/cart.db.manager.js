@@ -1,21 +1,26 @@
 const cartModel = require('../../models/carts.model');
+const BaseManager = require('../base.manager');
 
 
-class CartManager {
+class CartManager extends BaseManager {
 
-    async getById(id) {
+    constructor() {
+        super(cartModel);
+    }
+
+    /* async getById(id) {
         const cart = await cartModel.findOne({ _id: id })
             .populate({ path: "products.product" });
 
         return cart;
-    }
+    } */
 
 
-    async create() {
+   /*  async create() {
         const cart = await cartModel.create({ products: [] })
 
         return cart
-    }
+    } */
 
     async update(cid, pid, quantity) {
 

@@ -150,26 +150,18 @@ const createPurchase = async (req, res) => {
 
     //traigo e carrito y sus productos
     const resp = await cM.getById(cid);
-    /* console.log('CART RESPONDE ******** '+JSON.stringify(resp,null,2)) */
 
     let arrayPurchase = [];
     if (resp.products.length > 0) {
         for (const elem of resp.products) {
             const prod = await pM.getById(elem.product._id)
-            console.log('PRODUCTO DEVUELTO' + JSON.stringify(prod, null, 2))
             if (prod.stock >= elem.quantity) {
                 //si el stock existente del producto es mayor al cargado en el carrito
                 //cargo el producto al array de compra
-                /* console.log('***  elem *** '+JSON.stringify(elem,null,2)) */
-
-                arrayPurchase.push({ _id: elem.product._id, price: elem.product.price, quantity: elem.quantity });
+                arrayPurchase.push({ _id: elem.product._id, price: prod.price, quantity: elem.quantity });
                 //borrar el producto comprado del carrito
-                /*  console.log('ID de Cart '+ cid + 'ID de Producto' + elem.product._id) */
-
-                /* console.log('RESPUESTA DE BORRAR PRODUCTO DEL CARRITO '+ JSON.stringify(resp,null,2)) */
                 const resp = await cM.deleteProductOfCart(cid, prod._id.toString());
             };
-
         };
     };
     try {
@@ -183,12 +175,12 @@ const createPurchase = async (req, res) => {
             //traer el ultimo Ticket para tomar su codigo e incrementarlo 
             //si no hay tickets su codigo sera 'TK-1'
             const resp = await tM.getAll();
-            let codeTicket = ''
+            let codeTicket = '';
 
             if (resp.length > 0) { //si hay tickets
                 codeTicket = 'TK-' + (parseInt((resp[resp.length - 1].code).match(/(\d+)$/)) + 1).toString();
             } else {
-                codeTicket = 'TK-1'
+                codeTicket = 'TK-1';
             }
             purchase = {
                 purchase_datetime: Date.now(),
@@ -208,11 +200,9 @@ const createPurchase = async (req, res) => {
         } else {
             res.status(400).send({
                 status: 400,
-                message: "Ticket No Generado",
+                message: "Ticket No Generado"
             });
         }
-
-
 
     } catch (e) {
         res.status(500).send({

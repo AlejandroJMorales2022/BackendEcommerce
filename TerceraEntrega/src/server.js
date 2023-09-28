@@ -9,7 +9,7 @@ const initializePassport = require('./config/passport.config');
 
 //**** (async funtion main(){})() **** o arrow function)
 (async () => {
-    
+
     const { Command } = require('commander');
     const program = new Command();
     program.option('-e, --env <env>', 'Entorno de Ejecucion', 'development');
@@ -17,14 +17,14 @@ const initializePassport = require('./config/passport.config');
 
     //destructuro la variable env de program.option() que contiene Entorno de Desarrollo en el que trabajare
     const { env } = program.opts();
-    console.log('Env: '+env)
+    console.log('Env: ' + env)
     const path = require('path');
     const http = require('http');
 
     //importo la libreria dotenv de variables de entorno
     const dotenv = require('dotenv');
     dotenv.config({
-        path:path.join(__dirname, env === 'development' ? '.env.development' : '.env')
+        path: path.join(__dirname, env === 'development' ? '.env.development' : '.env')
     })
 
     const express = require('express');
@@ -45,6 +45,7 @@ const initializePassport = require('./config/passport.config');
     //Importo los routers
     const { api, views } = require('../src/routes/index');
     let userOnline = [];
+
 
     try {
         await mongoose.connect(config.MONGO_URL);
@@ -83,7 +84,7 @@ const initializePassport = require('./config/passport.config');
         /// middleware global
         app.use((req, res, next) => {
 
-            console.log('respuesa User:'+ JSON.stringify(req.user,null,2))
+            console.log('respuesa User:' + JSON.stringify(req.user, null, 2))
             /* console.log('respuesa de session:'+ JSON.stringify(req.session,null,2), req.user) */
             // console.log(req.cookies) // leer las cookies
             // console.log(req.signedCookies)
@@ -91,9 +92,9 @@ const initializePassport = require('./config/passport.config');
             /* console.log(req.session); */
 
             // const { user } = req.cookies
-            /* console.log(req.session, req.user);*/ 
+            /* console.log(req.session, req.user);*/
             next();
-        }); 
+        });
 
         //routers
         app.use('/api', api);

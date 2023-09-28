@@ -5,5 +5,6 @@ module.exports = {
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CALLBACK_URL: process.env.GITHUB_CALLBACK_URL,
   PORT: process.env.PORT,
-  URL: process.env.URL
+  URL: process.env.URL,
+  PERSISTANCE: process.env.MANAGER_PERSISTANCE
 }

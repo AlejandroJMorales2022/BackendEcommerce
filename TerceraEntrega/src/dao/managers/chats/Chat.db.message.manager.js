@@ -1,13 +1,17 @@
 const chatMessageModel = require('../../models/chat.messages.model');
+const BaseManager = require('../base.manager');
 
+class ChatMessageManager extends BaseManager {
 
-class ChatMessageManager {
+    constructor() {
+        super(chatMessageModel);
+    }
 
-    getAll(){
+    getAll() {
         return chatMessageModel.find().sort({ datetime: 1 }).lean();
     }
 
-    create(message){
+    create(message) {
         return chatMessageModel.create(message);
     }
 

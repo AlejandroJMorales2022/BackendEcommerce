@@ -2,7 +2,7 @@ const userManager = require('../dao/managers/users/user.manager');
 const { hashPassword, isValidPassword } = require("../utils/password.utils");
 const passport = require('passport');
 const isAuth = require('../dao/managers/users/middlewares/auth.middleware');
-
+const UserDTO = require('../dao/models/dto/user.dto');
 
 
 //Reistro de Usuario
@@ -77,11 +77,14 @@ const login = (req, res, next) => {
 //trae el usuario logueado, si existiera uno
 const getCurrentUser = (req, res) => {
     if (isAuth) {
+        const userData = new UserDTO(req.user);
+        console.log('USER DTO: ' + userData)
         // El usuario está autenticado, por lo que puedes acceder a él a través de req.user.
         res.status(200).send({
             status: 200,
             message: `Usuario Logueado`,
-            payload: req.user //agregar pra la entrega 3 PF que no devuelva password
+            payload: userData.getUserData()
+           /*  payload: req.user */ //agregar pra la entrega 3 PF que no devuelva password
         });
     } else {
         // El usuario no está autenticado.

@@ -26,6 +26,14 @@ class ProductManager {
     
         return this.#products
       }
+
+      async getAllPaged() {
+        await this.#readFile()
+    
+        return { docs: this.#products, pageInfo: {} } 
+    
+        // return this.#products
+      }
     
       async getById(id) {
         await this.#readFile()
@@ -93,5 +101,5 @@ class ProductManager {
     
 
 }
-module.exports = ProductManager;
+module.exports = new ProductManager('products.json');
 /* export default ProductManager */

@@ -1,20 +1,28 @@
 const { Router } = require("express");
-const pM = require('../dao/managers/products/Product.db.manager');
-const cM = require('../dao/managers/carts/cart.db.manager');
-const userManager = require('../dao/managers/users/user.manager');
+//--------------------------------------------------------------------------------
+//modificando la importacion del DAO (MOngoDB o FileSystems cambio de Persistecia)
+/* const pM = require('../dao/managers/products/Product.db.manager'); */ //Original
+/* const pM = require('../dao/managers/products/Product.fs.manager'); */ //Original
+//importo mi ManagerFactory
+const ManagerFactory = require('../dao/managers/factory.manager');
+//Entonces ahora ya puedo comentar las 2 importaciones de Managers de arriba 
+const pM = ManagerFactory.getManagerInstance("products"); //llamo la instancia de Factory pasandole 
+//el tipo de persistencia que quiero usar
+const cM = ManagerFactory.getManagerInstance("carts");
+/* const userManager = ManagerFactory.getManagerInstance("users"); */
+//---------------------------------------------------------------------------------
+/* const cM = require('../dao/managers/carts/cart.db.manager'); */ //Original
+const userManager = require('../dao/managers/users/user.manager'); //Original
 const isAuth = require('../dao/managers/users/middlewares/auth.middleware');
 const isUser = require('../dao/managers/users/middlewares/user.role.middleware');
 const { Session } = require("express-session");
 const util = require('util');
 
 
-
-/* const pM = productManager; */
-
 const router = Router();
 
 
-router.get('/chat', isUser , (req, res) => {
+router.get('/chat', isUser, (req, res) => {
     const { user } = req;
 
     res.render('chat', {
@@ -175,7 +183,7 @@ router.get('/logout', isAuth, (req, res) => {
 router.get('/user-data', (req, res) => {
     /*  console.log(util.inspect(req, { showHidden: false, depth: null })); */
     const { user } = req;
-   
+
 
     if (user) {
         res.json({ usuario: user.email });
@@ -192,7 +200,7 @@ router.get('/administracion', (req, res) => {
             ...user,
             logged: true,
             role: req.session.role,
-             isAdmin: (req.session?.role === 'Administrador') ? true : false
+            isAdmin: (req.session?.role === 'Administrador') ? true : false
         } : null,
         title: 'Pantalla de Administración',
         style: 'style'
@@ -202,14 +210,14 @@ router.get('/administracion', (req, res) => {
 //admin
 router.get('/admin', (req, res, next) => {
 
-    const { email} = req.body
+    const { email } = req.body
     console.log(req.body)
     res.render('adminUsersList', {
         user: {
             firstname: email,
-            logged:true,
+            logged: true,
         },
-        
+
         adminView: true,
         style: 'style',
         js: 'adminview',

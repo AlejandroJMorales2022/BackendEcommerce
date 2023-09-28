@@ -6,9 +6,6 @@ const path = require('path');*/
 //importo el modelo de products de mongo db
 /* const productModel = require('../dao/models/products.model') */
  
-
-
-
 const getAll =async (req, res) => {
     const { search, max, min, limit } = req.query;
 
