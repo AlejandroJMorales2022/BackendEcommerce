@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class=" col d-flex align-items-center">
+            <span>Página {{pageInfo.page}} de {{pageInfo.totalPages}}</span>
+            {{#if pageInfo.hasPrevPage}}
+            <a class="p-2" href={{pageInfo.startLink}}>Primero</a>
+            <a class="p-2" href={{pageInfo.prevLink}}>Anterior</a>
+            {{/if}}
+            {{#if pageInfo.hasNextPage}}
+            <a class="p-2" href={{pageInfo.nextLink}}>Siguiente</a>
+            <a class="p-2" href={{pageInfo.endLink}}>Ultimo</a>
+            {{/if}}
+        </div>
+    </div>
+    <span id="user" style="display:none">{{user._id}}</span>
+    <div class="row d-flex justify-content-evenly align-items-center">
+        {{#each products}}
+        <div class="card col-sm-4 col-11 mb-2" style="width: 18rem;">
+            <img src="/uploads/{{thumbnails}}" class="card-img-top img_prod" alt="{{thumbnails}}">
+            <div class="card-body">
+                <h5 class="card-title">{{title}}</h5>
+                <div class="container fluid p-0 m-0">
+                    <div class="row d-flex flex-column justify-content-start align-items-center">
+                        <div class="col-12">
+                            <span  class="title_field_product">Código:</span><span > {{code}}</span>
+                            <span id="codProduct" style="display:none;">{{_id}}</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="title_field_product">Categoría:</span><span> {{category}}</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="title_field_product">Precio:</span><span> ${{price}}</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="title_field_product">Stock:</span><span> {{stock}}un.</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="title_field_product">Descripción:</span>
+                            <p class="card-text">{{description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <div class="col-12">
+                        <label for="qty">Cantidad</label>
+                        <input id="qty_{{_id}}" type="number">
+                    </div>
+                    <div class="col-12 d-flex justify-content-center">
+                        <button onclick="addProductToCart(document.getElementById('user').innerText, '{{_id}}', document.getElementById('qty_{{_id}}').value )" class="btn btn-secondary rounded m-2">Agregar al Carrito</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

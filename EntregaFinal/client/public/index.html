@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Manager - Template Engine y Websockets</title>
+    <link rel="stylesheet" href="./css/style.css" type='text/css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    <div class="title_container">
+        <h1>Formulario del Lado Clente</h1>
+    </div>
+
+    <div class="table-container">
+        <form class="form_products">
+            <div>
+                <h3>PRODUCTOS</h3>
+            </div>
+            <div>
+                <label for="titulo_product">TÍTULO</label>
+                <input type="text" name="title" id="title_product">
+            </div>
+            <div>
+                <label for="code_product">CÓDIGO</label>
+                <input type="text" name="code" id="code_product">
+            </div>
+            <div>
+                <label for="stock_product">STOCK</label>
+                <input type="text" name="stock" id="stock_product">
+            </div>
+            <div>
+                <label for="price_product">PRECIO</label>
+                <input type="text" name="price" id="price_product">
+            </div>
+            <div>
+                <label for="description">DESCRIPCIÓN</label>
+                <input type="text" name="description" id="description_product">
+            </div>
+            <!-- <div>
+                <label for="img_product">IMAGEN</label>
+                <input type="file" name="img" id="img_product">
+            </div> -->
+
+        </form>
+        <div>
+            <button onclick=handleOnClick()>Egregar Producto</button>
+            <button onclick=handleOnClickDelete()>Eliminar Producto</button>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/http_client.js"></script>
+
+</body>
+
+</html>

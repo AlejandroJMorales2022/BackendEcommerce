@@ -1,0 +1,46 @@
+<div class="container  text-center card w-50 p-4">
+  <div class="row d-flex justify-content-center">
+    <div class="col-12">
+      <h3>Inicia sesion</h3>
+    </div>
+    <div class="col-10">
+      <form id='login-form' action="/api/sessions/login" method="post">
+        <div class="m-2">
+          <div class="d-inline">
+            <span class="uk-form-icon" uk-icon="icon: user"></span>
+            <input id='email' name="email" class="form-control" type="text" aria-label="Not clickable icon">
+          </div>
+        </div>
+
+        <div class="m-2">
+          <div class="d-inline">
+            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+            <input id='password' name="password" class="form-control" type="password" aria-label="Not clickable icon">
+          </div>
+        </div>
+
+        <div class="m-2">
+          <div class="d-inline">
+            <span>No tienes cuenta? <a href="/signup">Registrate!</a></span>
+          </div>
+        </div>
+
+        <div class="m-2">
+          <div class="d.inline">
+            <span>Entrar con <a href="/api/auth/github">GitHub</a></span>
+          </div>
+        </div>
+        
+
+        {{!-- {{#if error}} --}}
+        <div class="mb-3">
+          <span id="lblError" style="color:tomato">{{error}}</span>
+        </div>
+        {{!-- {{/if}} --}}
+
+
+        <button class="btn btn-secondary" type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+</div>

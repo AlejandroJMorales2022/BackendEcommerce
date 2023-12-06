@@ -1,0 +1,86 @@
+paths:
+  /api/sessions/login:
+    post:
+      summary: Login de Usuario, con email y password. Local Strategy de Passport
+      tags:
+        - Sessions
+      responses:
+        200:
+          description: Success
+        401:
+          description: Usuario o Contraseña Invalidos
+        500:
+          description: Error de servidor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/UserLogin'
+  /api/sessions/signup:
+    post:
+      summary: Registra un Usuario nuevo en la base de datos de MongoDB
+      tags:
+        - Sessions
+      responses:
+        200:
+          description: Success
+        401:
+          description: El Usuario Ya Existe (en caso de querer registrar un nuevo usuario con un email ya existente en la base de datos de MongoDB)
+        500:
+          description: Error de servidor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/UserSignUp'
+
+components:
+  schemas:
+    UserSignUp:
+      type: object
+      properties:
+        firstname:
+          type: string
+          description: Nombre/s del Usuario
+        lastname:
+          type: string
+          description: Apellido/s del Usuario
+        gender:
+          type: string
+          description: Genero de Usuario
+        age:
+          type: number
+          description: Edad del Usuario
+        email:
+          type: string
+          description: Correo Electronico del Usuario
+        password:
+          type: string
+          description: Password o Clave de Acceso del Usuario (sin hashear)
+        role:
+          type: string
+          description: Role del Usuario (Usuario, Administrador, Premium)
+      example: 
+        {
+        firstname : "Juan Jose",
+        lastname : "Paso",
+        gender : "Male",
+        age : 139,
+        email : "jjpaso@yahoo.com.ar",
+        password : "123",
+        role : "Usuario"
+        }
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Correo Electronico que Identifica al usuario
+        password: 
+          type: string
+          description: Password o Clave que ingresa el usuario (sin hashear)
+      example: 
+        email: malejandro2002@gmail.com
+        password: "123456"

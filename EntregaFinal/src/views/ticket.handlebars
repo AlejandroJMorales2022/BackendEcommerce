@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="text-center">
+        <h6 class="card-title mb-3">Ticket-Id: {{ticketId}}</h6>
+    </div>
+    <div class="row d-flex justify-content-evenly align-items-center">
+       
+        <div class="card col-sm-3 col-12 mb-2" style="width: 24rem;">
+            <div class="d-flex justify-content-center">
+                <img src="/uploads/{{thumbnails}}" class="card-img-top img_prod_cart" alt="{{product.thumbnails}}">
+            </div>
+            
+            <div class="card-body">
+                <h2 style="font-size: 18px;" class="card-title text-center title_field_product">{{title}}</h2>
+                <div class="container fluid p-0 m-0">
+                    <div class="row d-flex flex-column justify-content-start align-items-center">
+                        <div class="col-12">
+                            <span class="title_field_product">Fecha: </span><span> {{ticketDate}}</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="title_field_product">Código: </span><span> {{ticketCode}}</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="title_field_product">Monto Total: </span><span> ${{ticketAmount}}</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="title_field_product">Comprador: </span><span>{{ticketPurcharser}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!-- <div>
+        <button onclick="createTicket('{{cartId}}')">Comprar - Generar Ticket</button>
+    </div> --}}
+</div>

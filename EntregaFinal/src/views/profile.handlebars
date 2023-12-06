@@ -1,0 +1,19 @@
+<div class="row d-flex justify-content-center">
+  <div class="col-8 card p-4 m-4" uk-grid>
+    <h3>Tu perfil, {{user.firstname}}</h3>
+    <ul>
+      <li>Nombre: {{user.firstname}} {{user.lastname}}</li>
+      <li>Email: {{user.email}}</li>
+      <li>Edad: {{user.age}}</li>
+      <li>Genero: {{user.gender}}</li>
+      {{!-- <li>Rol: {{role}}</li> --}}
+    </ul>
+  </div>
+  <div class="m-2 col-12 d-flex justify-content-center">
+      <a onclick="sendEmail()" {{!-- href="/mail" --}} class="btn btn-secondary" style="text-decoration: none; color:black">Restablecer Contraseña</a>
+       <div class="mb-3">
+          <span id="lblError" style="color:tomato">{{error}}</span>
+        </div>
+  </div>
+</div>
+<script src="/client/js/email.resetpass.js" ></script>

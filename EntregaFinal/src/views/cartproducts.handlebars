@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="text-center">
+        <h6 class="card-title mb-3">Cart-Id: {{cartId}}</h6>
+    </div>
+    <div class="row d-flex justify-content-start align-items-center">
+        {{#each products}}
+        <div class="card col-sm-3 col-11 mb-2" style="width: 10rem;">
+            <div class="col-12 d-flex justify-content-center">
+                <img src="/uploads/{{thumbnails}}" class="card-img-top img_prod_cart" alt="{{product.thumbnails}}">
+            </div>
+            
+            <div class="card-body">
+                <h6 class="card-title text-center title_field_product">{{title}}</h6>
+                <div class="container fluid p-0 m-0">
+                    <div class="row d-flex flex-column justify-content-start align-items-center">
+                        <div class="col-12">
+                            <span class="title_field_product">Código:</span><span> {{code}}</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="title_field_product">Precio:</span><span> ${{price}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="col-sm-6 col-12 d-flex justify-content-center align-items-center">
+                    <p class="title_field_product me-2">Cantidad </p>
+                    <p class="productQty d-flex justify-content-center align-items-center"> {{quantity}}</p>
+                </div>
+            </div>
+        </div>
+       
+        {{/each}}
+    </div>
+    <div class="mt-4 mb-4">Cantidad de Productos: <span id="precioTicket">{{totalProducts}}</span></div>
+    <div class="mt-4 mb-4">Total de la Compra $<span id="precioTicket">{{totalAmount}}</span></div>
+    <div class="d-flex justify-content-center mt-4">
+        <button class="btn btn-secondary " onclick="createTicket('{{cartId}}')">Comprar - Generar Ticket</button>
+    </div>
+</div>

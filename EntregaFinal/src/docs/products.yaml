@@ -1,0 +1,190 @@
+paths:
+  /api/products:
+    get:
+      summary: Trae todos los Productos existentes en la base de datos
+      tags:
+        - Products
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        404:
+          description: Not Found
+        500:
+          description: Failure
+    post:
+      summary: Crea un Producto nuevo
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Product'
+      responses:
+        201:
+          description: El Producto ha sido Agregado con Exito
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/Product'
+        403:
+          description: Acceso Denegado. El Usuario No esta Logeado o No Tiene Permisos para Ejecutar esta Accion 
+        404:
+          description: Not Found
+        500:
+          description: Failure
+  /api/products/{pid}:
+    get:
+      summary: Trae u Producto según el ID (pid) del mismo
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id del Producto, tomado de la base de datos de MongoDB (_id)
+          schema: 
+            $type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/getProductById'
+        404:
+          description: Not Found
+        500:
+          description: Failure
+    delete:
+      summary: Elimina el Producto seleccionado segun su ID (pid)
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id del Producto, tomado de la base de datos de MongoDB (_id)
+          schema: 
+            $type: string
+      responses:
+        200:
+          description: El Producto ha sido Eliminado Correctamente
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/deleteProduct'
+        403:
+          description: Acceso Denegado. El Usuario No esta Logeado o No Tiene Permisos para Ejecutar esta Accion 
+        404:
+          description: Not Found
+        500:
+          description: Failure
+    put:
+      summary: Modifica el Producto seleccionado segun su ID (pid)
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id del Producto, tomado de la base de datos de MongoDB (_id)
+          schema: 
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Product'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/Product'
+        403:
+          description: Acceso Denegado. El Usuario No esta Logeado o No Tiene Permisos para Ejecutar esta Accion 
+        404:
+          description: Not Found
+        500:
+          description: Failure
+
+components:
+  schemas:
+    deleteProduct:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado Numerico (200) indicando que la operacion se realizo exitosamente
+        message: Mensaje Indicando que la operacion se desarrollo con exito, aclarando el Id del producto borrado 
+      example: 
+        status: 200
+        message: El Producto con Id 651ca8ef980e0e4328d06442 ha sido Eliminado correctamente...
+    getProductById:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado Numerico (200) indicando que la operacion se realizo exitosamente
+        payload:
+          type: object
+          description: Objeto que contiene todas las propiedades del Producto encontrado
+      example:
+          status: 200
+          payload:
+            _id: 64c93e557ba17db5afa18056
+            title: Lapiz Color Morado
+            description: Lapiz color Verde largo Faber Castell x1
+            code: DC66556
+            price: 777
+            status: true
+            stock: 250
+            category: Libreria
+            thumbnails: ["pencil_green.jpg"]
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Titulo/Nombre del Producto
+        description:
+          type: string
+          description: Descripcion/Detalle del Producto
+        code:
+          type: string
+          description: Codigo de Identificacion del Producto
+        price:
+          type: number
+          description: Precio de Venta del Producto
+        status:
+          type: boolean
+          description: Estado del Producto (true/false)
+        stock:
+          type: number
+          description: Cantidad de Producto en Existencia
+        category: 
+          type: string
+          description: Categoria/Fmilia a la que pertenece el Producto
+        thumbnails:
+          type: string
+          description: Imagenes asociadas al Producto
+      example:
+          title: Lapiz Color Morado
+          description: Lapiz color Verde largo Faber Castell x1
+          code: CD6556
+          price: 777
+          status: true
+          stock: 250
+          category: Libreria
+          thumbnails: []
+    

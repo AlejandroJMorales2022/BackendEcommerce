@@ -1,0 +1,46 @@
+.gral{
+    color: tomato;
+}
+.img_prod{
+
+    height: 150px;
+}
+.img_prod_cart{
+
+    height: 100px;
+    width: 100px !important;
+}
+.title_field_product{
+    font-size: 0.8rem;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 600;
+}
+.form_products div{
+    display: block;
+    padding: 10px;
+}
+.title_container{
+    display: flex;
+    justify-content: center;
+}
+.mensaje{
+    background-color: black;
+    color: azure;
+    font-size: 0.8rem;
+}
+.navbar-nav:hover .nav-item:hover .nav-link:hover {
+    color: tomato;
+}
+.joined{
+    background-color: forestgreen;
+}
+.notJoined{
+    background-color: tomato;
+}
+#messages{
+    max-height: 50vh;
+    overflow-y: auto;
+}
+.card{
+    min-height: 300px !important;
+} 

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/client/css/{{style}}.css" type='text/css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <div>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <div class="container-fluid d-flex justify-content-between">
+                <a class="navbar-brand" href="#">
+                    <img src="../../uploads/online-shop.png" alt="" width="45" height="45"
+                        class="d-inline-block align-text-top">
+                    Ecommerce
+                </a>
+                <!-- Botón a la derecha -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Elementos del menú de navegación -->
+                <div class="collapse navbar-collapse flex-column" id="navbarSupportedContent">
+                    <div class="ms-auto"> <!-- Nuevo contenedor con la clase "ms-auto" -->
+                        <ul class="navbar-nav text-end me-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            </li>
+
+                            {{!-- {{#if user}} --}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/chat">Chat</a>
+                            </li>
+                            {{!-- {{/if}} --}}
+                            {{#if user}}
+                            <li>
+                                <div class="uk-navbar-dropdown">
+                                    <ul class="navbar-nav text-end">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/profile">Perfil</a>
+                                        </li>
+                                        {{#if user.isAdmin}}
+                                        {{!-- <li class="nav-item">
+                                            <a class="nav-link" href="/administracion">Administracion</a>
+                                        </li> --}}
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/users">Ver Usuarios</a>
+                                        </li>
+                                        {{/if}}
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/logout">Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            {{else}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">Inicia Sesion</a>
+                            </li>
+                            {{/if}}
+                            {{#if user.cart._id}}
+                            <li class="nav-item">
+                                <a style="font-size:12px; " class="nav-link active d-flex column" aria-current="page"
+                                    href="/carts/{{user.cart._id}}">
+
+                                    <img src="../../uploads/online-shop.png" alt="" width="35" height="35"
+                                        alt="cartImage">
+                                    Cart {{prodQty}}
+                                </a>
+                            </li>
+                            {{/if}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid text-center">
+        <div class="row d-flex justify-content-center">
+            {{#if user.logged}}
+            <div class="col-12 text-start">
+                <span style="font-weight: 500;">Bienvenido {{user.firstname}}!!! </span>
+            </div>
+            <div class="col-12 text-start">
+                <span>Email: {{user.email}}</span>
+                <span id="user_id" style="display:none;">{{user._id}}</span>
+            </div>
+            <div class="col-12 text-start">
+                <span>Role: {{user.role}}</span>
+            </div>
+            {{/if}}
+            <div class="col-12">
+                <h1 class="pt-2 pb-3">{{title}}</h1>
+            </div>
+        </div>
+
+    </div>
+    <div class="container-fluid d-flex justify-content-center align-items-center">
+        {{{body}}}
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    {{#if realtimeProducts}}
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client/js/{{js}}.js"></script>
+    {{/if}}
+    {{#if chat}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client/js/{{js}}.js"></script>
+    {{/if}}
+    {{#if adminView}}
+    <script src="/client/js/{{js}}.js"></script>
+    {{/if}}
+    {{!-- {{#if signup}}
+    <script src="/client/js/{{js}}.js"></script>
+    {{/if}} --}}
+
+</body>
+
+</html>

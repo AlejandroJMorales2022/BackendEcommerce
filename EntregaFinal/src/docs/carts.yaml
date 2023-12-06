@@ -1,0 +1,488 @@
+paths:
+  /api/carts:
+    post:
+      summary: Crea un Carrito de Compras nuevo
+      tags:
+        - Carts
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/Cart'
+        403:
+          description: Acceso Denegado. El Usuario No esta Logeado o No Tiene Permisos para Ejecutar esta Accion 
+        404:
+          description: Not Found
+        500:
+          description: Failure
+  /api/carts/{cid}:
+    get:
+      summary: Trae los Productos existentes en el Carrito según el Cart ID (cid) enviado
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del Carrito de Compras, tomado de la base de datos de MongoDB (_id de la colection Carts)
+          schema: 
+            $type: string
+      responses:
+        202:
+          description: Acepted
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/getCartById'
+        404:
+          description: Not Found
+        500:
+          description: Failure
+    delete:
+      summary: Elimina Todos los Productos del Carrito segun su ID (cid)
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del Carrito de Compras, tomado de la base de datos de MongoDB (_id de la collection Carts)
+          schema: 
+            $type: string
+      responses:
+        201:
+          description: Los Productos del Carrito han sido Eliminados Correctamente
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/ModifyCartContent'
+        403:
+          description: Acceso Denegado. El Usuario No esta Logeado o No Tiene Permisos para Ejecutar esta Accion 
+        404:
+          description: Not Found
+        500:
+          description: Failure
+    put:
+      summary: Agrega un array de Productos al seleccionado segun su ID (cid)
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del Carrito de Compras, tomado de la base de datos de MongoDB (_id)
+          schema: 
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/AddProductsToCart'
+      responses:
+        201:
+          description: Success
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/ModifyCartContent'
+        403:
+          description: Acceso Denegado. El Usuario No esta Logeado o No Tiene Permisos para Ejecutar esta Accion 
+        404:
+          description: Not Found
+        500:
+          description: Failure
+  /api/carts/{cid}/product/{pid}:
+    delete:
+      summary: Elimina El producto seleccionado segun {pid} del Carrito seleccionado segun {cid}
+      tags:
+        - Carts
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id de Producto tomado de la base de datos de MongoDB (_id de la collection Products)
+          schema: 
+            $type: string
+        - name: cid
+          in: path
+          required: true
+          description: Id del Carrito de Compras, tomado de la base de datos de MongoDB (_id de la collection Carts)
+          schema: 
+            $type: string
+      responses:
+        201:
+          description: El Producto ha sido Eliminado del Carrito de Compras Correctamente
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/DeleteProductOfCart'
+        403:
+          description: Acceso Denegado. El Usuario No esta Logeado o No Tiene Permisos para Ejecutar esta Accion 
+        404:
+          description: Not Found
+        500:
+          description: Failure
+    post:
+      summary: Agrega El producto seleccionado segun {pid} del Carrito seleccionado segun {cid}
+      tags:
+        - Carts
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id de Producto tomado de la base de datos de MongoDB (_id de la collection Products)
+          schema: 
+            $type: string
+        - name: cid
+          in: path
+          required: true
+          description: Id del Carrito de Compras, tomado de la base de datos de MongoDB (_id de la collection Carts)
+          schema: 
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/AddQtyProductsToCart'
+      responses:
+        202:
+          description: El Producto ha sido Agregado al Carrito de Compras Correctamente
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/ProductAddedToCart'
+        403:
+          description: Acceso Denegado. El Usuario No esta Logeado o No Tiene Permisos para Ejecutar esta Accion 
+        404:
+          description: Not Found
+        500:
+          description: Failure
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Genera un Ticket (orden de compra) con los productos del Carrito seleccionado segun {cid}
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del Carrito de Compras tomado de la base de datos de MongoDB (_id de la collection Carts)
+          schema: 
+            $type: string
+      responses:
+        201:
+          description: El Ticket u Orden de Compra ha sido Generado Con Exito
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/TicketCreated'
+        206:
+          description: El Ticket se ha Generado Parcialmente, ya que hay productos en el Carrito sin Stock Suficiente 
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/TicketCreated'
+        403:
+          description: Acceso Denegado. El Usuario No esta Logeado o No Tiene Permisos para Ejecutar esta Accion 
+        404:
+          description: Not Found
+        500:
+          description: Failure      
+components:
+  schemas:
+    TicketCreated:
+      type: object
+      properties:
+        status:
+          type: number
+          description: Descripcion numerica del estado de la operacion realizada
+        message:
+          type: string
+          description: Descrpcion Literal del resultado de laoperacion realizada
+        ticket:
+          type: object
+          description: Objeto que contiene todas las propiedades del Ticket Generado
+          properties:
+            _id:
+              type: ObjectId
+              Description: Id del Ticket generado por MongoDB
+            code:
+              type: string
+              description: Codigo de Identificaion del Ticket
+            purchase_datetime:
+              type: date
+              description: Fecha de creacion del Ticket
+            amount:
+              type: number
+              description: Monto total del Ticket
+            purcharser:
+              type: string
+              description: email del usuario comprador (quie genero e ticket)
+        productsInTicket:
+          type: array
+          description: array de productos cargados en el Ticket creado
+          properties:
+            _id:
+              type: ObjectId
+              description: Id del producto generado por MongoDB
+            price:
+              type: number
+              description: precio unitrio del producto
+            quantity:
+              type: number
+              description: Cantidad comprada del producto
+        productInCart:
+          type: array
+          description: array de productos cargados en el Ticket creado
+          properties:
+            _id:
+              type: ObjectId
+              description: Id del producto generado por MongoDB
+            price:
+              type: number
+              description: precio unitrio del producto
+            quantity:
+              type: number
+              description: Cantidad comprada del producto
+      example:
+          status: 206
+          message: Ticket Generado pero Quedan Productos Pendientes en el Carrito de Compras por Falta de Stoc
+          ticket: {
+            code: TK-54,
+            purchase_datetime: 1696379620934,
+            amount: 90000,
+            purcharser: malejandro2002@yahoo.com.ar,
+            _id: 651cb2e422ee7d636913f532
+          }
+          productsInTicket: [
+            {
+            _id: 64cffadd0103524fde1d7639,
+            price: 986,
+            quantity: 12
+            },
+            {
+            _id: 64cffadd0103524fde1d7697,
+            price: 1800,
+            quantity: 19
+            },
+            {
+            _id: 64cffadd0103524fde1d7112,
+            price: 2200,
+            quantity: 4
+            }
+          ]
+          productsInCart: [
+            {
+            _id: 64cffadd0103524fde1d7732,
+            price: 1100,
+            quantity: 30
+            },
+            {
+            _id: 64cffadd0103524fde1d7789,
+            price: 3200,
+            quantity: 5
+            },
+            {
+            _id: 64cffadd0103524fde1d7444,
+            price: 5100,
+            quantity: 16
+            }
+          ]
+    AddQtyProductsToCart:
+      type: object
+      properties:
+        quantity:
+          type: number
+          description: Cantidad de Producto a Agregar al Carrito de Compras
+    ProductAddedToCart:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Descripcion del Estado (success) indicando que la operacion se realizo exitosamente
+        statusNumber:
+          type: number
+          description: Estado Numerico (201) indicando que la operacion se realizo exitosamente
+        message:
+          type: string
+          description: Mensaje describiendo el resultado de la operacion realizada
+      example:
+          status: success
+          statusNumber: 202
+          message: El Producto ha sido Agregado Correctamente al carrito...
+    DeleteProductOfCart:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Descripcion del Estado (success) indicando que la operacion se realizo exitosamente
+        statusNumber:
+          type: number
+          description: Estado Numerico (201) indicando que la operacion se realizo exitosamente
+        payload:
+          type: object
+          description: Objeto que contiene todas las propiedades correspondientes al resultado de la busqueda y eliminacion de productos del Carrito de Compras
+          properties:
+            _id:
+              type: objectId
+              description: Id del Carrito generado por MongoDB
+            createdDate:
+              type: date
+              description: Fecha de creacion del Carrito de Compras
+            products:
+              type: array
+              description: Array de Productos Existentes en el Carrito de Compras
+              properties:
+                product:
+                  type: ObjectId
+                  description: Id del producto generado por MongoDB
+                quantity:
+                  type: number
+                  description: Cantidad de producto a agregar al Carrito de Compras
+      example:
+          status: success
+          statusNumber: 201
+          payload:
+            _id: 64c93e557ba17db5afa18056
+            createDate: 1695937122067
+            products: [
+              {
+              product: 64c93e557ba17db5afa18056,
+              quantity: 2
+              },
+              {
+              product: 64c93e557ba17db5afa18057,
+              quantity: 10
+              },
+              {
+              product: 64c93e557ba17db5afa18058,
+              quantity: 1
+              }
+            ]
+    AddProductsToCart:
+      type: object
+      properties:
+        products:
+          type: array
+          description: array de productos a agregar el Carrito de Compras
+          properties:
+            product:
+              type: string
+              description: Id del producto generado por MongoDB
+            quantity:
+              type: number
+              description: Cantidad de producto a agregar al Carrito de Compras
+      example:
+          products: [
+            {
+            product: 64c93e557ba17db5afa18056,
+            quantity: 2
+            },
+            {
+            product: 64c93e557ba17db5afa18057,
+            quantity: 10
+            },
+            {
+            product: 64c93e557ba17db5afa18058,
+            quantity: 1
+            }
+          ]
+    ModifyCartContent:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Descripcion del Estado (success) indicando que la operacion se realizo exitosamente
+        statusNumber:
+          type: number
+          description: Estado Numerico (201) indicando que la operacion se realizo exitosamente
+        payload:
+          type: object
+          description: Objeto que contiene todas las propiedades correspondientes al resultado de la busqueda y eliminacion de productos del Carrito de Compras
+          properties:
+            acknowledge:
+              type: boolean
+              description: Carrito Identificado
+            modifiedCount: 
+              type: number
+              description: Cantidad de Registros Modificados en la Base de Datos
+            upsertedId: 
+              type: number
+              description: ID del Registro Insertado en la Base de Datos
+            upsertedCount: 
+              type: number
+              description: Cantidad de Registros Insertados en la Base de Datos
+            matchedCount:
+              type: number
+              description: Cantidad de Registros Encontrados en la Base de Datos
+      example:
+          status: success
+          statusNumber: 201
+          payload:
+            acknowledge: true
+            modifiedCount: 1
+            upsertedId: null
+            upsertedCount: 0
+            matchedCount: 1
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id del Carrito de Compras generado por MongoDB
+        createdDate:
+          type: date
+          description: Fecha de Creacion del Carrito
+        products:
+          type: array
+          description: Array de Prooductos Vacio ([])
+      example:
+          createdDate: 1695937122067
+          _id: 64c93e557ba17db5afa18056
+          products: []
+    getCartById:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Descripcion del Estado (success) indicando que la operacion se realizo exitosamente
+        statusNumber:
+          type: number
+          description: Estado Numerico (202) indicando que la operacion se realizo exitosamente
+        payload:
+          type: object
+          description: Objeto que contiene todas las propiedades del Carrito de Compras
+          properties:
+            createdDate:
+              type: date
+              description: Fecha de creacion de Carrito
+            _id:
+              type: ObjectId
+              description: Id del Carrito generado por MongoDB
+            products:
+              type: array
+              description: array de productos existentes en el Carrito
+              properties:
+                product:
+                  type: string
+                  description: Id del Producto 
+                quantity:
+                  type: number
+                  description: Cantidad del Producto en el Carrito
+                _id:
+                  type: string
+                  description: Id generado por MongoDB que identifica a cada registro del array de productos obtenido
+      example:
+          status: success
+          statusNumber: 202
+          payload:
+            _id: 64c93e557ba17db5afa18056
+            createDate: 1695937122067
+            products: 
+              product: DC66556
+              quantity: 150
+              _id: 651cb2dd22ee7d636913f515 
