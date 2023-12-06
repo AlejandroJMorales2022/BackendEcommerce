@@ -13,8 +13,9 @@ socket.on('update_products', data => {
 
 
 const addProduct = async (cart, id_product, quantity) => {
-    console.log(cart, id_product, quantity)
+    /* console.log(cart, id_product, quantity) */
     try {
+
         //verificar si el rpoducto exsite,
         //si existe, modificar la cantidad,
         //si no existe agregarlo tal cual viene
