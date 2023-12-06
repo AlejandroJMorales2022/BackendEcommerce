@@ -1,3 +1,5 @@
+//js usado por las plantilla sde handlebars
+
 
 const socket = io(); //levantamos socket del lado del cliente
 
